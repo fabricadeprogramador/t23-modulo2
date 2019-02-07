@@ -28,8 +28,11 @@ class ConvidadosRoute{
             res.send("PUT para /convidados não implementado!")
         })
 
-        app.delete('/convidados', function(req, res){
-            res.send("DELETE para /convidados não implementado!")
+        app.delete('/convidados/:posicao', (req, res) => {
+           let posicaoDeletar = req.params.posicao
+           convidados.splice(posicaoDeletar, 1)
+
+           res.send("Deletado com sucesso!")
         })
     }
 }
