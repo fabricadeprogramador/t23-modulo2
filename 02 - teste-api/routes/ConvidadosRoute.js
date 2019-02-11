@@ -24,8 +24,24 @@ class ConvidadosRoute{
             res.send(convidadoNovo)
         })
 
-        app.put('/convidados', function(req, res){
-            res.send("PUT para /convidados não implementado!")
+        app.put('/convidados', (req, res) => {
+            let convidadoEdicao = req.body
+            let deuCertoEdicao = false
+
+            for(let i = 0; i < convidados.length; i++){
+                if(convidadoEdicao.id == convidados[i].id){
+                    convidados.splice(i, 1, convidadoEdicao)
+                    deuCertoEdicao = true
+                    break;
+                }
+            }
+
+            if(deuCertoEdicao){
+                res.status(200).send("Convidado editado com sucesso!")
+            } else {
+                res.status(500).send("Erro ao editar convidado!")
+            }
+          
         })
 
         app.delete('/convidados/:posicao', (req, res) => {
@@ -34,6 +50,25 @@ class ConvidadosRoute{
 
            res.send("Deletado com sucesso!")
         })
+
+        app.delete('/convidados', (req, res) => {
+            let idDeletar = req.body.id
+            let posicao = ""
+            let objetoDeletado
+
+            for(let i = 0; i < convidados.length; i++){
+                if(convidados[i].id == idDeletar){
+                    posicao = i
+                }
+            }
+
+            if(posicao != ""){
+               objetoDeletado =  convidados.splice(posicao, 1)
+               res.send("Deletado com sucesso! " + JSON.stringify(objetoDeletado))
+            } else {    
+                res.send("ID Inválido!")
+            }
+         })
     }
 }
 
