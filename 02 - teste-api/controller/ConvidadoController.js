@@ -36,7 +36,6 @@ class ConvidadoController{
     static async deletar(req, res){
         try{
             let idDeletar = req.body._id
-            console.log(idDeletar)
             let resultado = await Convidado.findByIdAndDelete(req.body)
             res.status(200).json(resultado)
         } catch(error){
