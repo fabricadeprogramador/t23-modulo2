@@ -9,6 +9,10 @@ class ConvidadosRoute{
         app.route('/convidados')
             .get(ConvidadoController.buscarTodos)
             .post(ConvidadoController.adicionar)
+            .delete(ConvidadoController.deletar)
+
+        app.route('/convidados/:nome')
+            .get(ConvidadoController.buscarPorNome)
             
 
         // app.get('/convidados', function(req, res){
