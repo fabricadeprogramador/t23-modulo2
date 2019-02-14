@@ -1,13 +1,31 @@
 'use strict'
 
-class Convidado{
+const Mongoose = require('mongoose');
 
-    constructor(id,nome, idade, sexo){
-        this.id = id
-        this.nome = nome
-        this.idade = idade
-        this.sexo = sexo
+class Convidado extends Mongoose.Schema{
+
+    constructor() {
+        super({
+
+            nome: {
+                type: String,
+                required: true
+            },
+            idade: {
+                type: Number,
+                required: true
+            },
+            sexo: {
+                type: String,
+                required: true
+            }
+
+        });
+
+        //Registrando a criação do model no Mongoose
+        Mongoose.model('Convidado', this);
+
     }
 }
 
-module.exports = Convidado
+module.exports = Convidado;
