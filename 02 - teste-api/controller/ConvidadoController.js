@@ -42,6 +42,16 @@ class ConvidadoController{
             res.status(500).send("Erro ao deletar convidado!")
         }
     }
+
+    static async editar(req, res){
+        try{
+            let resultado = await Convidado.findByIdAndUpdate(req.body._id, req.body)
+            console.log(resultado)
+            res.status(200).send(resultado)
+        } catch(error){
+            res.status(500).send("Erro ao editar convidado!")
+        }
+    }
 }
 
 module.exports = ConvidadoController

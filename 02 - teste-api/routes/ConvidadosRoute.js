@@ -10,6 +10,7 @@ class ConvidadosRoute{
             .get(ConvidadoController.buscarTodos)
             .post(ConvidadoController.adicionar)
             .delete(ConvidadoController.deletar)
+            .put(ConvidadoController.editar)
 
         app.route('/convidados/:nome')
             .get(ConvidadoController.buscarPorNome)
