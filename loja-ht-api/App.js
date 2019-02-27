@@ -7,6 +7,7 @@ const env = process.NODE_ENV || 'development'
 const BodyParser = require('body-parser')
 const config = require('./config.json')[env]
 const Cliente =  require('./models/Cliente')
+const Departamento = require('./models/Departamento')
 
 class App{
 
@@ -18,6 +19,7 @@ class App{
         //Instanciar o objeto do Express
         this.app = Express()
 
+<<<<<<< HEAD
 
         this.app.use(BodyParser.json())
 
@@ -33,6 +35,22 @@ class App{
         //instanciando o objeto responsável por definir as rotas (instanciar aqui todas os objetos que 
         // definem as rotas)
         new ClienteRoute(this.app)
+=======
+        this.app.use(bodyParser.json());
+
+        Mongoose.connect(`mongodb://${config.db.user}:${config.db.password}@${config.db.url}/${config.db.name}`, { useNewUrlParser: true })
+
+
+        new Departamento()
+
+
+        const DepartamentoRoute = require('./routes/DepartamentoRoute')
+
+        
+        new DepartamentoRoute(this.app)
+
+
+>>>>>>> 6231718f10d2e91fcee32e23b2c48916bc7ab0b2
 
         //Define a rota e o handler da rota raiz (/) da API
         this.app.get('/', function(req, res){
