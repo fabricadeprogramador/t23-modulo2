@@ -35,15 +35,15 @@ class DepartamentoController{
 }
 static async deletar(req,res){
     try {
-        let idDeletar=  req.body_id
-        let resultado = await Departamento.findByIdDelete(req.body)
+        let idDeletar=  req.body._id
+        let resultado = await Departamento.findByIdAndDelete(req.body)
         res.status(200).json(resultado)
 
         
 
         
     } catch (error) {
-        
+        console.log(error)
         res.status(500).send('Impossivel deletar o departamento')
 
     }
@@ -72,7 +72,7 @@ static async buscarNome(req,res){
         
     } catch (error) {
         
-        res.status(500).send('Impossivel buscar o departamento')
+        res.status(500).send('Impossivel buscarcls o departamento')
         
     }
 }
