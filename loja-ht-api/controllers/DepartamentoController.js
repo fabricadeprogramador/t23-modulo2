@@ -2,6 +2,7 @@
 
 
 const Mongoose = require('mongoose')
+
 const Departamento = Mongoose.model('Departamento')
 
 class DepartamentoController{
@@ -59,6 +60,20 @@ static async editar(req,res){
     } catch (error) {
         
         res.status(500).send('Impossivel editar o departamento')
+        
+    }
+}
+
+static async buscarNome(req,res){
+    try {
+    let resultado = await Departamento.findByIdUpdate(req.body._id, req.body)
+    console.log(resultado)
+    res.status(200).send(resultado)
+    
+        
+    } catch (error) {
+        
+        res.status(500).send('Impossivel buscar o departamento')
         
     }
 }
