@@ -21,11 +21,12 @@ class Produto extends Moongose.Schema {
             },
             marca: {
                 type: String,
-                require: true
+                required: true
             },
             departamento:[{
                 type: moongose.Schema.Types.ObjectId,
-                ref: 'Departamento'
+                ref: 'Departamento',
+                required: true
             }]        
         });
 
