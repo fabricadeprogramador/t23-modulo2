@@ -21,9 +21,7 @@ class ClienteController{
     static async adicionar(req, res){
         
         try{
-            console.log("Cliente: " + JSON.stringify(req.body))
             let adicionarCliente = await Cliente.create(req.body)
-            // console.log(adicionarCliente)
             res.status(200).send("Cliente " + adicionarCliente + " adicionado com sucesso!")
         
         }
