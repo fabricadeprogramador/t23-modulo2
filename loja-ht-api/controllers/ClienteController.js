@@ -7,7 +7,9 @@ class ClienteController{
 
     static async buscarTodos(req, res){
         try{
-            res.json(await Cliente.find({}))
+            res.json(await Cliente.find({})
+            .populate('usuario', 'username senha')
+            .exec())
         
         }
         
@@ -34,23 +36,24 @@ class ClienteController{
     
     }
     
-    // static async deletar(req, res){
-    //     try{
+    static async deletar(req, res){
+        try{
+            let idDeletar = req.body._id
+            let resultado = await Cliente.findByIdAndDelete(req.body)
+            res.status(200).json(resultado)
+        } catch(error){
+            res.status(500).send("Erro ao deletar convidado!")
+        }
+    }
 
-    //     } catch(error){
-
-    //     }
-    
-    // }
-    
-    // static async editar(req, res){
-    //     try{
-
-    //     } catch(error){
-
-    //     }
-    
-    // }
+    static async editar(req, res){
+        try{
+            let resultado = (await Cliente.findByIdAndUpdate(req.body._id, req.body))
+            res.status(200).send(resultado)
+        } catch(error){
+            res.status(500).send("Erro ao editar convidado")
+        }
+    }
 
 }
 

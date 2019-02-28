@@ -8,8 +8,8 @@ class Cliente extends Mongoose.Schema{
         super({
 
             usuario: {
-                type: String,
-                required: true
+                type: Mongoose.Schema.Types.ObjectId,
+                ref: 'Usuario'
             },
 
             nome: {

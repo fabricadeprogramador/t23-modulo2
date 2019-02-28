@@ -10,8 +10,8 @@ class ClienteRoute{
         app.route('/cliente')
         .get(ClienteController.buscarTodos)
         .post(ClienteController.adicionar)
-        // .delete(ClienteController.deletar)
-        // .put(ClienteController.editar)
+        .delete(ClienteController.deletar)
+        .put(ClienteController.editar)
 
     }
 
