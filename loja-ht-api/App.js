@@ -1,10 +1,12 @@
 'use strict'
 
 const Express = require('express')
-
+const bodyParser = require('body-parser')
+const Mongoose = require('mongoose')
 const env = process.NODE_ENV || 'development'
 const config = require('./config.json')[env]
-const Departamento = require('./models/Departamento')
+
+const Departamento = require('./../models/Departamento')
 
 class App{
 
