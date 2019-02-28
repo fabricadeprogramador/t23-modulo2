@@ -2,7 +2,7 @@
 
 
 const Mongoose = require('mongoose')
-const Departamento = require('./../model/Departamento')
+const Departamento = require('./../models/Departamento')
 
 class DepartamentoController{
 

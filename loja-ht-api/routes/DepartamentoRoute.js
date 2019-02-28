@@ -1,7 +1,7 @@
 'use scrict'
 
-const Departamento = require('./../model/Departamento')
-const DepartamentoController =require('./../controller/DepartamentoController')
+const Departamento = require('./../models/Departamento')
+const DepartamentoController =require('./../controllers/DepartamentoController')
 
 
 class DepartamentoRoute{

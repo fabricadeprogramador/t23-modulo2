@@ -12,11 +12,12 @@ class Usuario extends Mongoose.Schema{
                 required: true
             },
             senha: {
-                type: Password,
+                type: String,
                 required: true
             },
             tipo: {
-                type: Enum ['CLIENTE', 'ADMIN'],
+                type: String,
+                enum: ['CLIENTE', 'ADMIN'],
                 required: true
             }
 
