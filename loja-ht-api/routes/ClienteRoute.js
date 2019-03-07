@@ -7,11 +7,11 @@ const ClienteController = require('./../controllers/ClienteController')
 class ClienteRoute{
 
     constructor(app){
-        app.route('/cliente')
+        app.route('/clientes')
         .get(ClienteController.buscarTodos)
         .post(ClienteController.adicionar)
-        // .delete(ClienteController.deletar)
-        // .put(ClienteController.editar)
+        .delete(ClienteController.deletar)
+        .put(ClienteController.editar)
 
     }
 

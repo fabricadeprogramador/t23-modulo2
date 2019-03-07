@@ -2,7 +2,6 @@
 
 
 const Mongoose = require('mongoose')
-
 const Departamento = Mongoose.model('Departamento')
 
 class DepartamentoController{
