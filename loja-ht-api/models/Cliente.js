@@ -20,12 +20,11 @@ class Cliente extends Mongoose.Schema{
             cpf: {
                 type: String,
                 required: true
-            }
+            },
 
-            // dataNascimento: {
-            //     type: String,
-            //     required: true
-            // }
+            dataNascimento: {
+                type: String
+            }
 
             // carrinho: {
 

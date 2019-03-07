@@ -20,6 +20,7 @@ class UsuarioController{
             console.log("RESULTADO: " + resultado)
             res.status(200).json(resultado)
         } catch(error){
+            console.log("Erro ao salvar usuário: " + error)
             res.status(500).send("Erro ao adicionar usuario!")
         }
     }
