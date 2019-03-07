@@ -42,7 +42,6 @@ class App{
         const UsuariosRoute = require('./routes/UsuariosRoute')
         const ComprasRoute = require('./routes/ComprasRoute')
 
-
         //instanciando o objeto responsável por definir as rotas (instanciar aqui todas os objetos que 
         // definem as rotas)
         new ClienteRoute(this.app)
@@ -50,7 +49,7 @@ class App{
         new CarrinhoRoute(this.app)
         new UsuariosRoute(this.app)
         new ComprasRoute(this.app)
-        
+
         //Define a rota e o handler da rota raiz (/) da API
         this.app.get('/', function(req, res){
             res.send('Seja bem-vindo a API da Loja HT!!')
@@ -67,6 +66,3 @@ class App{
 }
 
 new App().init()
-
-
-

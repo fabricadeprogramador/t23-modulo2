@@ -24,7 +24,7 @@ class ClienteController{
         
         try{
             let adicionarCliente = await Cliente.create(req.body)
-            res.status(200).send("Cliente " + adicionarCliente + " adicionado com sucesso!")
+            res.status(200).send(adicionarCliente)
         
         }
         
