@@ -10,6 +10,7 @@ const Usuario = require('./models/Usuario')
 const Cliente =  require('./models/Cliente')
 const Departamento = require('./models/Departamento')
 const Compras = require('./models/Compras')
+const Carrinho = require('./models/Carrinho')
 
 class App{
 
@@ -31,17 +32,22 @@ class App{
         new Cliente();
         new Departamento()
         new Compras()
+        new Carrinho()
+
 
         //Importando as rotas (inserir aqui todas as rotas das entidades: clienteRota, usuárioRota, etc...)
         const ClienteRoute = require('./routes/ClienteRoute')
         const DepartamentoRoute = require('./routes/DepartamentoRoute')
+        const CarrinhoRoute = require('./routes/CarrinhoRoute')
         const UsuariosRoute = require('./routes/UsuariosRoute')
         const ComprasRoute = require('./routes/ComprasRoute')
+
 
         //instanciando o objeto responsável por definir as rotas (instanciar aqui todas os objetos que 
         // definem as rotas)
         new ClienteRoute(this.app)
         new DepartamentoRoute(this.app)
+        new CarrinhoRoute(this.app)
         new UsuariosRoute(this.app)
         new ComprasRoute(this.app)
         
