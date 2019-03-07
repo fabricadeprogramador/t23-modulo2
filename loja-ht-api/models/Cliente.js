@@ -32,7 +32,7 @@ class Cliente extends Mongoose.Schema{
             },
 
             historico: [{
-                type: mongoose.Schema.Types.ObjectId,
+                type: Mongoose.Schema.Types.ObjectId,
                 ref: 'Compras'
             }]
 
