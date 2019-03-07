@@ -4,13 +4,13 @@ const ProdutoController = require('./../controllers/ProdutoController')
 class ProdutoRoute {
     constructor(app){
 
-        app.route('/produto')
+        app.route('/produtos')
             .get(ProdutoController.buscarTodos)
             .post(ProdutoController.adicionar)
             .delete(ProdutoController.deletar)
             .put(ProdutoController.editar)
 
-        app.route('/produto/:nomeProduto')
+        app.route('/produtos/:nomeProduto')
             .get(ProdutoController.buscarPorNome)
         
     }

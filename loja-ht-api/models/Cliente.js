@@ -23,9 +23,8 @@ class Cliente extends Mongoose.Schema{
             },
 
             dataNascimento: {
-                type: String,
-
-            },
+                type: String
+            }
 
             carrinho: {
                 type: Mongoose.Schema.Types.ObjectId,
