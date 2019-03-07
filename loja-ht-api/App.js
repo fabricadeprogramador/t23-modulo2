@@ -9,6 +9,7 @@ const config = require('./config.json')[env]
 const Usuario = require('./models/Usuario')
 const Cliente =  require('./models/Cliente')
 const Departamento = require('./models/Departamento')
+const Compras = require('./models/Compras')
 
 class App{
 
@@ -29,17 +30,20 @@ class App{
         new Usuario()
         new Cliente();
         new Departamento()
+        new Compras()
 
         //Importando as rotas (inserir aqui todas as rotas das entidades: clienteRota, usuárioRota, etc...)
         const ClienteRoute = require('./routes/ClienteRoute')
         const DepartamentoRoute = require('./routes/DepartamentoRoute')
         const UsuariosRoute = require('./routes/UsuariosRoute')
+        const ComprasRoute = require('./routes/ComprasRoute')
 
         //instanciando o objeto responsável por definir as rotas (instanciar aqui todas os objetos que 
         // definem as rotas)
         new ClienteRoute(this.app)
         new DepartamentoRoute(this.app)
         new UsuariosRoute(this.app)
+        new ComprasRoute(this.app)
         
         //Define a rota e o handler da rota raiz (/) da API
         this.app.get('/', function(req, res){
