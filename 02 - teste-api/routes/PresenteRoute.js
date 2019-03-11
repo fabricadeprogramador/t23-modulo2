@@ -10,9 +10,6 @@ class PresenteRoute{
         .post(PresenteController.adicionar)
         .put(PresenteController.editar)
         .delete(PresenteController.deletar)
-        
-        
-
     }
 
 }

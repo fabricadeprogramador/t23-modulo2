@@ -11,6 +11,7 @@ const Cliente =  require('./models/Cliente')
 const Departamento = require('./models/Departamento')
 const Compras = require('./models/Compras')
 const Carrinho = require('./models/Carrinho')
+const Produto = require('./models/Produto')
 
 class App{
 
@@ -29,10 +30,11 @@ class App{
 
         //Chamando as entidades (inserir aqui todas as entidades: cliente, usuário, departamentos, etc...)
         new Usuario()
-        new Cliente();
+        new Cliente()
         new Departamento()
         new Compras()
         new Carrinho()
+        new Produto()
 
 
         //Importando as rotas (inserir aqui todas as rotas das entidades: clienteRota, usuárioRota, etc...)
@@ -41,6 +43,7 @@ class App{
         const CarrinhoRoute = require('./routes/CarrinhoRoute')
         const UsuariosRoute = require('./routes/UsuariosRoute')
         const ComprasRoute = require('./routes/ComprasRoute')
+        const ProdutosRoute = require('./routes/ProdutoRoute')
 
         //instanciando o objeto responsável por definir as rotas (instanciar aqui todas os objetos que 
         // definem as rotas)
@@ -49,6 +52,7 @@ class App{
         new CarrinhoRoute(this.app)
         new UsuariosRoute(this.app)
         new ComprasRoute(this.app)
+        new ProdutosRoute(this.app)
 
         //Define a rota e o handler da rota raiz (/) da API
         this.app.get('/', function(req, res){

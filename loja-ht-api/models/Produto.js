@@ -24,15 +24,14 @@ class Produto extends Moongose.Schema {
                 required: true
             },
             departamento:[{
-                type: moongose.Schema.Types.ObjectId,
+                type: Moongose.Schema.Types.ObjectId,
                 ref: 'Departamento',
                 required: true
             }]        
         });
 
-        Moongose.model('Convidado', this);
+        Moongose.model('Produto', this);
     }
 }
-new Produto();
 
 module.exports = Produto;
