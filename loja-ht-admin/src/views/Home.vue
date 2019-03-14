@@ -1,13 +1,11 @@
 <template>
-  <HelloWorld />
+  <div class="red lighten-3 white--text">
+    HOME
+  </div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
   export default {
-    components: {
-      HelloWorld
-    }
+
   }
 </script>

@@ -1,32 +1,23 @@
 <template>
   <v-app>
-     <v-toolbar color="primary" dark app>
-      <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-toolbar-title>Loja HT</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>A</v-btn>
-        <v-btn flat>B</v-btn>
-        <v-icon>alarm</v-icon>
-      </v-toolbar-items>
-    </v-toolbar>
-
+    <NavBar />
     <v-content>
-      <!-- <HelloWorld /> -->
-      <TesteComponent/>
+      <router-view></router-view>
     </v-content>
+    <v-footer class="pa-2 primary white--text">
+      <v-spacer></v-spacer>
+      <div>Fábrica de Programador - T23 &copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-  import HelloWorld from './components/HelloWorld'
-  import TesteComponent from './components/TesteComponent'
+  import NavBar from '@/components/NavBar'
 
   export default {
     name: 'App',
     components: {
-      HelloWorld,
-      TesteComponent
+      NavBar
     },
     data() {
       return {
