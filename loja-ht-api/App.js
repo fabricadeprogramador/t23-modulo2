@@ -1,6 +1,7 @@
 'use strict'
 
 const Express = require('express')
+const Cors = require('cors')
 
 const Mongoose = require('mongoose')
 const env = process.NODE_ENV || 'development'
@@ -24,6 +25,8 @@ class App{
         this.app = Express()
 
         this.app.use(BodyParser.json())
+
+        this.app.use(Cors())
 
         //chamando o DB
         Mongoose.connect(`mongodb://${config.db.user}:${config.db.password}@${config.db.url}/${config.db.name}`, { useNewUrlParser: true})

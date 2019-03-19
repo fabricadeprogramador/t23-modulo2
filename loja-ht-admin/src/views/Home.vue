@@ -1,5 +1,5 @@
 <template>
-  <div class="red lighten-3 white--text">
+  <div class="home">
     HOME
   </div>
 </template>

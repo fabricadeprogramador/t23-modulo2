@@ -13,6 +13,15 @@ class UsuarioController{
         }
     }
 
+    static async autenticar(req, res){
+        try{
+            res.json(await Usuario.find(req.body))
+        }catch(error){
+            console.log(error)
+            res.status(500).send("Erro na autenticação!")
+        }
+    }
+
     static async adicionar(req, res){
         try{
             console.log("USUARIO: " + JSON.stringify(req.body))
