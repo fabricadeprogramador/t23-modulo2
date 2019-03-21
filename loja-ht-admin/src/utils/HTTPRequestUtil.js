@@ -12,5 +12,10 @@ export default{
     async adicionarDepartamento(departamento){
         return axios.post(API_URL + 'departamentos', departamento)
         .then(response => response.data)
-    }
+    },
+
+    async editarDepartamento(departamento){
+        return axios.put(API_URL + 'departamentos', departamento)
+        .then(response => response.data)
+    },    
 };

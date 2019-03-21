@@ -2,7 +2,7 @@
     <nav>
         <v-toolbar app class="primary white--text">
             <v-toolbar-side-icon @click="drawer = ! drawer" class="white--text"></v-toolbar-side-icon>
-            <v-toolbar-title>Loja HT - Admin</v-toolbar-title>
+            <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-btn icon>

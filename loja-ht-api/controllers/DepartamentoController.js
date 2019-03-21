@@ -39,9 +39,6 @@ class DepartamentoController {
             let resultado = await Departamento.findByIdAndDelete(req.body)
             res.status(200).json(resultado)
 
-
-
-
         } catch (error) {
             console.log(error)
             res.status(500).send('Impossivel deletar o departamento')
@@ -51,13 +48,14 @@ class DepartamentoController {
 
     static async editar(req, res) {
         try {
-            let resultado = await Departamento.findByIdUpdate(req.body._id, req.body)
-            console.log(resultado)
-            res.status(200).send(resultado)
-
-
+            let resultado = await Departamento.findByIdAndUpdate(req.body._id, req.body)
+            if(resultado != null){
+                res.status(200).send(resultado)
+            } else {
+                res.status(500).send("Erro na edição: Objeto sem id")
+            }
         } catch (error) {
-
+            console.log("ERRO NA EDICAO: " + error)
             res.status(500).send('Impossivel editar o departamento')
 
         }
@@ -65,7 +63,9 @@ class DepartamentoController {
 
     static async buscarNome(req, res) {
         try {
-            let resultado = await Departamento.findByIdUpdate(req.body._id, req.body)
+            let departamento = {}
+            departamento.nome = req.body.nome
+            let resultado = await Departamento.find(departamento)
             console.log(resultado)
             res.status(200).send(resultado)
 

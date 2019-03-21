@@ -4,12 +4,17 @@
             <v-layout align-center justify-center fill-height>
                 <v-flex xs12>
                     <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-text-field v-model="departamentoCorrente.nome" :counter="20" :rules="regrasNome" label="Nome" required></v-text-field>
+                        <v-text-field v-model="departamentoCorrente.nome" :counter="20" :rules="regrasNome" label="Nome"
+                            required></v-text-field>
 
-                        <v-text-field v-model="departamentoCorrente.descricao" label="Descrição" required></v-text-field>
+                        <v-text-field v-model="departamentoCorrente.descricao" label="Descrição" required>
+                        </v-text-field>
 
                         <v-btn :disabled="valid == false" color="info" @click="salvar()">
                             Salvar
+                        </v-btn>
+                         <v-btn color="error" @click="limparDados()">
+                            Limpar
                         </v-btn>
                     </v-form>
                 </v-flex>
@@ -18,26 +23,11 @@
             <v-layout row>
                 <v-flex xs12 class="my-4">
                     <v-card>
-                        <!-- <v-toolbar color="cyan" dark>
-                            <v-toolbar-side-icon></v-toolbar-side-icon>
-
-                            <v-toolbar-title>Inbox</v-toolbar-title>
-
-                            <v-spacer></v-spacer>
-
-                            <v-btn icon>
-                                <v-icon>search</v-icon>
-                            </v-btn>
-                        </v-toolbar> -->
-
                         <v-list>
                             <v-subheader>
                                 {{ title }}
                             </v-subheader>
                             <template v-for="(departamento) in departamentos">
-
-
-                                <!-- <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider> -->
 
                                 <v-list-tile :key="departamento.nome">
 
@@ -46,12 +36,18 @@
                                     </v-list-tile-content>
 
                                     <v-list-tile-action>
-                                        <v-btn icon ripple @click="editar(departamento)">
-                                            <v-icon>edit</v-icon>
-                                        </v-btn>
-                                        <v-btn icon ripple @click="inativar(departamento)">
-                                            <v-icon>not_interested</v-icon>
-                                        </v-btn>
+                                        <v-layout>
+                                            <v-flex xs12 class="my-4">
+                                                <v-btn icon ripple @click="editar(departamento)">
+                                                    <v-icon>edit</v-icon>
+                                                </v-btn>
+                                            </v-flex>
+                                            <v-flex xs12 class="my-4">
+                                                <v-btn icon ripple @click="inativar(departamento)">
+                                                    <v-icon>not_interested</v-icon>
+                                                </v-btn>
+                                            </v-flex>
+                                        </v-layout>
                                     </v-list-tile-action>
 
                                 </v-list-tile>
@@ -75,19 +71,9 @@
                 v => (v && v[0] == v[0].toUpperCase() || 'A primeira letra deve ser maiúscula!')
             ],
             departamentoCorrente: {},
+            departamentoEdicao: {},
             departamentos: [],
-            title: 'Lista de Departamentos',
-            items: [
-                {
-                    title: 'Brunch this weekend?'
-                },
-                {
-                    title: 'Summer BBQ'
-                },
-                {
-                    title: 'Oui oui'
-                }
-            ]
+            title: 'Lista de Departamentos'
         }),
         // created: function(){
         //     alert("Chamou o created")
@@ -105,40 +91,54 @@
 
         methods: {
             salvar() {
-                // let departamento = {}
-                // departamento.nome = this.nome
-                // departamento.descricao = this.descricao
-
-              
-                if(this.departamentoCorrente._id != undefined){
-                    //TODO: Fazer Requisição PUT para /departamentos
-                    alert("EDIÇÃO")
-                } else{
-                    //TODO: Fazer requisição POST para /departamentos
-                    alert("ADIÇÃO")
+                if (this.departamentoCorrente._id != undefined) {
+                    //Edição
+                    HTTPRequestUtil.editarDepartamento(this.departamentoCorrente).then(departamento => {
+                         if (departamento == "Erro na edição: Objeto sem id" || departamento == "Impossivel editar o departamento") {
+                            alert("Erro ao editar departamento!")
+                        } else {
+                            this.limparDados()
+                            this.buscarDepartamentos()
+                            alert("Departamento editado com sucesso!")
+                        }
+                    })
+                } else {
+                    //Adição
+                    alert(this.departamentoCorrente)
+                    HTTPRequestUtil.adicionarDepartamento(this.departamentoCorrente).then(departamento => {
+                        if (departamento == "Impossivel adicionar o Departamento") {
+                            alert("Erro ao adicionar departamento!")
+                        } else {
+                            this.limparDados()
+                            this.buscarDepartamentos()
+                            alert("Departamento salvo com sucesso!")
+                        }
+                    })
                 }
-                
 
-                // HTTPRequestUtil.getDepartamentos()
-                //     .then(departamentos => {
-                //         this.departamentos = departamentos
-                //     })
-                // alert(JSON.stringify(this.departamentos))
             },
 
             editar(item) {
-                this.departamentoCorrente = item
-                alert("Método Editar clicado!" + JSON.stringify(item))
+                this.departamentoEdicao = item
+                this.departamentoCorrente = {}
+                this.departamentoCorrente._id = item._id
+                this.departamentoCorrente.nome = item.nome
+                this.departamentoCorrente.descricao = item.descricao
             },
+
             inativar(item) {
                 alert("Método Inativar clicado!" + JSON.stringify(item))
             },
 
-            buscarDepartamentos(){
+            buscarDepartamentos() {
                 HTTPRequestUtil.getDepartamentos()
-                .then(departamentos => {
-                    this.departamentos = departamentos
-                })
+                    .then(departamentos => {
+                        this.departamentos = departamentos
+                    })
+            },
+
+            limparDados() {
+                this.departamentoCorrente = {}
             }
         }
     }
