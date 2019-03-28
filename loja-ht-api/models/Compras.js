@@ -7,7 +7,7 @@ class Compras extends Mongoose.Schema {
     super({
       produto: [
         {
-          type: Moongose.Schema.Types.ObjectId,
+          type: Mongoose.Schema.Types.ObjectId,
           ref: "Produto",
           required: true
         }
