@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/"
+const API_URL = "https://loja-ht-api-t23.herokuapp.com/"
 import axios from 'axios'
 
 export default{
