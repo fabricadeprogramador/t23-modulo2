@@ -1,14 +1,280 @@
 <template>
     <div class="produtos">
-        PRODUTOS
+        <v-container fluid>
+        <!-- inicio dos campos -->
+        
+
+        
+
+
+            <!-- inicio da primeira linha com os campos descrição e valor -->
+            <v-layout align-center justify-center fill-height>
+                <v-flex xs5>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-text-field label="Descrição" v-model="produtoCorrente.descricao" :counter="20" :rules="regrasDescricao" required="">
+
+                        </v-text-field>
+                    </v-form>
+                </v-flex>
+
+                <v-flex>
+
+                </v-flex>
+            
+                <v-flex xs5>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-text-field type="number" label="Valor" v-model="produtoCorrente.valor" :counter="20" required="">
+
+                        </v-text-field>
+                    </v-form>
+                </v-flex>
+            </v-layout>
+
+
+
+
+
+            <!-- segunda linha com os campos Quantidade e Marca -->
+            <v-layout align-center justify-center fill-height>
+                <v-flex xs5>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-text-field type="number" label="Quantidade" v-model="produtoCorrente.qtdeDisponivel" :counter="20" required="">
+
+                        </v-text-field>
+                    </v-form>
+                </v-flex>
+            
+                <v-flex>
+
+                </v-flex>
+
+                <v-flex xs5>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-text-field label="Marca" v-model="produtoCorrente.marca" :counter="20" :rules="regrasMarca" required="">
+
+                        </v-text-field>
+                    </v-form>
+                </v-flex>
+            </v-layout>
+
+
+            
+            
+            
+            <!-- Lista de departamentos -->
+            <v-layout>
+                <v-flex xs6 sm5 d-flex class="mt-4">
+                    <v-select :items="departamentos" item-text="nome" label="Departamentos" outline v-model="select"></v-select>
+                </v-flex>
+            </v-layout>
+            <!-- /Lista de departamentos -->
+
+
+
+
+            <!-- botões -->
+            <v-btn :disabled="valid == false" color="info" @click="salvar()">
+                Salvar
+            </v-btn>
+
+            <v-btn color="error" @click="limparDados()">
+                Limpar
+            </v-btn>
+            <!-- /botões -->
+
+
+<br>
+
+
+            <!-- tela de apresentação de todos os produtos cadastrados -->
+            <template >
+
+                <br>
+                <v-data-table :headers="cabecalho" :items="listaDosProdutos" class="elevation-1">
+                    <template v-slot:items="props">
+                        <td>{{ props.item.marca }}</td>
+                        <td class="text-xs-left">{{props.item.descricao}}</td>
+                        <td class="text-xs-left">{{props.item.valor}}</td>
+                        <td class="text-xs-left">{{props.item.qtdeDisponivel}}</td>
+                        <td class="text-xs-center">    
+                            <v-btn @click="editar(produto)">
+                                 Editar
+                            </v-btn>
+                            <v-btn @click="inativar(produto)"> 
+                                 Inativar
+                            </v-btn>
+                        </td>
+                    </template>
+                </v-data-table>
+            </template>
+            <!-- tela de apresentação de todos os produtos cadastrados -->
+
+
+
+
+
+            <!-- fim dos campos -->
+        </v-container>
     </div>
 </template>
 
-<script>
-export default {
 
-}
+
+
+
+
+
+<script>
+    import HTTPRequestUtil from "@/utils/HTTPRequestUtil"
+    
+    export default {
+        
+        data: () => ({
+            valid: false,
+            regrasDescricao: [
+                v => !!v || 'Campo descrição é obrigatório!',
+                v => (v && v.length <= 40) || 'A descrição do produto deve ter no máximo 40 caracteres!',
+                v => (v && v[0] == v[0].toUpperCase() || 'A primeira letra deve ser maiúscula!')
+
+            ],
+
+            regrasMarca: [
+                v => !!v || 'Campo Marca é obrigatório!',
+                v => (v && v.length <= 40) || 'A marca do produto deve ter no máximo 40 caracteres!',
+                v => (v && v[0] == v[0].toUpperCase() || 'A primeira letra deve ser maiúscula!')
+
+            ],
+
+            departamentos: [],
+            select: {},
+            produtoCorrente: {},
+            produtoEdicao: {},
+            produtos: [],
+            title: 'Lista de Produtos',
+        
+            cabecalho: [
+                    {
+                        text: 'Marca',
+                        align: 'left',
+                        sortable: false,
+                        value: 'marca'
+                    },
+                    {
+                        text: 'Descrição',
+                        align: 'left',
+                        sortable: false,
+                        value: 'descricao'
+                    },
+                    {
+                        text: 'Valor',
+                        align: 'left',
+                        sortable: false,
+                        value: 'valor'
+                    },
+                    {
+                        text: 'Qtde Disponível',
+                        align: 'left',
+                        sortable: false,
+                        value: 'qtdeDisponivel'
+                    },
+                    {
+                        text: 'Ações',
+                        sortable: false,
+                        align: 'center',
+                    }
+
+                ],
+
+                listaDosProdutos: []
+
+        }),
+        
+        mounted: function () {
+            //chamar o método de buscar produtos
+            this.buscarProdutos()
+            this.buscarDepartamentos()
+        },
+        
+        
+        methods: {
+            salvar() {
+                alert("Chamou o método Salvar" + JSON.stringify(this.produtoCorrente))
+                if (this.produtoCorrente._id != undefined) {
+                    
+                    //Edição
+                    HTTPRequestUtil.editarProduto(this.produtoCorrente).then(produto => {
+                        if (produto == "Erro na edição: Objeto sem id" || produto == "Impossivel editar o produto") {
+                            alert("Erro ao editar produto!")
+                        
+                        } else {
+                            this.limparDados()
+                            this.buscarProdutos()
+                            alert("Produto editado com sucesso!")
+                        }
+                    })
+                }
+                
+                else {
+                    
+                    //Adição
+                    HTTPRequestUtil.adicionarProduto(this.produtoCorrente).then(produto => {
+                        if (produto == "Erro ao adicionar o Produto!") {
+                            alert("Erro ao adicionar Produto!")
+                        
+                        } else {
+                            this.produtoCorrente.departamento = this.select
+                            this.limparDados()
+                            this.buscarProdutos()
+                            alert("Produto salvo com sucesso!")
+                        }
+                    })
+                }
+            },
+
+            editar(produto) {
+                alert("Vc quer editar o produto " + ", se sim, aperte OK.")
+                this.produtoEdicao = produto
+                this.produtoCorrente = {}
+                this.produtoCorrente._id = produto._id
+                this.produtoCorrente.nome = produto.nome
+                this.produtoCorrente.descricao = produto.descricao
+
+                this.salvar();
+
+            },
+
+            inativar(item) {
+                alert("Método Inativar clicado!" + JSON.stringify(item))
+            
+            },
+
+            buscarProdutos() {
+                HTTPRequestUtil.getProdutos()
+                    .then(produtos => {
+                        this.listaDosProdutos = produtos
+                    })
+
+            },
+
+            limparDados() {
+                this.produtoCorrente = {}
+            },
+
+            buscarDepartamentos() {
+               HTTPRequestUtil.getDepartamentos()
+                    .then(departamentos => {
+                        this.departamentos = departamentos
+                    })
+            },
+
+        }
+    }
 </script>
+
+
+
+
+
 
 <style>
 
