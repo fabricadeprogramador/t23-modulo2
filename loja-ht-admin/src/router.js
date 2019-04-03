@@ -1,45 +1,45 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
-import Usuarios from './views/Usuarios.vue'
-import Clientes from './views/Clientes.vue'
-import Departamentos from './views/Departamentos.vue'
-import Produtos from './views/Produtos.vue'
-import Compras from './views/Compras.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "./views/Home.vue";
+import Usuarios from "./views/Usuarios.vue";
+import Clientes from "./views/Clientes.vue";
+import Departamentos from "./views/Departamentos.vue";
+import Produtos from "./views/Produtos.vue";
+import Compras from "./views/Compras.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Home',
+      path: "/",
+      name: "Home",
       component: Home
     },
     {
-      path: '/usuarios',
-      name: 'Usuarios',
+      path: "/usuarios",
+      name: "Usuarios",
       component: Usuarios
     },
     {
-      path: '/clientes',
-      name: 'Clientes',
+      path: "/clientes",
+      name: "Clientes",
       component: Clientes
     },
     {
-      path: '/departamentos',
-      name: 'Departamentos',
+      path: "/departamentos",
+      name: "Departamentos",
       component: Departamentos
     },
     {
-      path: '/produtos',
-      name: 'Produtos',
+      path: "/produtos",
+      name: "Produtos",
       component: Produtos
     },
     {
-      path: '/compras',
-      name: 'Compras',
+      path: "/compras",
+      name: "Compras",
       component: Compras
     }
   ]
-})
+});

@@ -1,34 +1,33 @@
-'use strict'
+"use strict";
 
-const Mongoose = require('mongoose');
+const Mongoose = require("mongoose");
 
-class Compras extends Mongoose.Schema{
+class Compras extends Mongoose.Schema {
+  constructor() {
+    super({
+      produto: [
+        {
+          type: Mongoose.Schema.Types.ObjectId,
+          ref: "Produto",
+          required: true
+        }
+      ],
+      valorTotal: {
+        type: Number,
+        required: true
+      },
+      data: {
+        type: String,
+        required: true
+      },
+      pagamento: {
+        type: String,
+        enum: ["CREDITO", "DEBITO", "DINHEIRO"]
+      }
+    });
 
-    constructor(){
-        super({
-            Produto:{
-               type:String,
-                required:true
-            },
-            ValorTotal:{
-                type:Number,
-                required:true
-            },
-            Data:{
-                type:String,
-                required:true
-            },
-            Pagamento:{
-                type:String,
-                enum: ['CREDITO', 'DEBITO', 'DINHEIRO']
-            }
-
-        });
-
-        Mongoose.model('Compras', this);
-
-    }
-
+    Mongoose.model("Compras", this);
+  }
 }
 
 module.exports = Compras;

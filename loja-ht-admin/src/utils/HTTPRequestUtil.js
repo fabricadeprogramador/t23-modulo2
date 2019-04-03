@@ -34,6 +34,22 @@ export default{
     async editarDepartamento(produto){
         return axios.put(API_URL + 'produtos', produto)
         .then(response => response.data)
-    }
+    },
 
+    //////////USUARIOS////////////
+    async buscarUsuarios(){
+        return axios.get(API_URL + 'usuarios')
+        .then(response => response.data)
+    },
+
+    async salvarUsuario(usuario){
+        return axios.post(API_URL + 'usuarios', usuario)
+        .then(response => response.data)
+    },
+
+    async editarUsuario(usuario){
+        return axios.put(API_URL + 'usuarios', usuario)
+        .then(response => response.data)
+    },
 };
+
