@@ -31,7 +31,7 @@ export default{
         .then(response => response.data)
     },
 
-    async editarDepartamento(produto){
+    async editarProduto(produto){
         return axios.put(API_URL + 'produtos', produto)
         .then(response => response.data)
     },
