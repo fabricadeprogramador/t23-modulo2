@@ -1,101 +1,67 @@
 <template>
   <div class="clientes">
-    <v-flex xs13 sm7 offset-sm3>
-      <v-card>
-        <v-text-field
-          class="mx-3"
-          flat
-          label="Buscar"
-          prepend-inner-icon="search"
-          v-model="buscar"
-          clearable
-          @click:clear="clearSearch"
-        ></v-text-field>
+    <v-card class="elevation-0 pa-2">
+
+      <v-card-title>
         <v-spacer></v-spacer>
-      </v-card>
-    </v-flex>
-    <v-list three-line>
-      <v-subheader>{{ title }}</v-subheader>
-      <template v-for="(cliente) in filteredItems">
-        <v-list-tile :key="cliente.nome">
-          <v-list-tile-content>
-            <v-list-tile-title v-html="cliente.nome"></v-list-tile-title>
+        <v-text-field v-model="search" append-icon="search" label="Buscar por nome" single-line hide-details>
+        </v-text-field>
+      </v-card-title>
 
-            <v-list-tile-title v-html="cliente.cpf"></v-list-tile-title>
+      <v-data-table :headers="headers" :items="clientes" :search="search">
 
-            <v-list-tile-title v-html="cliente.dataNascimento"></v-list-tile-title>
-            <v-list-tile-title v-html="cliente.usurname"></v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-layout>
-              <v-flex xs12 class="my-4">
-                <v-btn icon ripple @click="inativar(cliente)">
-                  <v-icon>not_interested</v-icon>
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-list-tile-action>
-        </v-list-tile>
-      </template>
-    </v-list>
+        <template v-slot:items="props">
+          <td>{{ props.item.nome }}</td>
+          <td class="text-xs-left">{{ props.item.dataNascimento }}</td>
+          <td class="text-xs-left">{{ props.item.cpf }}</td>
+        </template>
+
+        <v-alert v-slot:no-results :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+
+      </v-data-table>
+
+    </v-card>
   </div>
 </template>
 
 <script>
-import HTTPRequestUtil from "@/utils/HTTPRequestUtil";
-export default {
-  data: () => ({
-    selected: [2],
-    buscar: "",
-    clientes: [],
-    title: "Lista de Clientes"
-  }),
-
-  mounted: function() {
-    this.getClientes();
-  },
-  methods: {
-    inativar(pessoa) {
-      alert("Método Inativar clicado!" + JSON.stringify(pessoa));
-    },
-    toggle(index) {
-      const i = this.selected.indexOf(index);
-
-      if (i > -1) {
-        this.selected.splice(i, 1);
-      } else {
-        this.selected.push(index);
+  import HTTPRequestUtil from "@/utils/HTTPRequestUtil";
+  export default {
+    data() {
+      return {
+        search: '',
+        headers: [{
+            text: 'Nome',
+            align: 'left',
+            sortable: true,
+            value: 'nome'
+          },
+          {
+            text: 'Data Nascimento',
+            value: 'datanasc'
+          },
+          {
+            text: 'CPF',
+            value: 'cpf'
+          }
+        ],
+        clientes: []
       }
     },
-
-    getClientes() {
-      HTTPRequestUtil.getClientes().then(clientes => {
-        this.clientes = clientes;
-      });
+    mounted: function () {
+      this.buscarClientes()
     },
-
-    limparDados() {
-      this.buscar = "";
-    }
-  },
-  computed: {
-    filteredItems() {
-      return _.orderBy(
-        this.clientes.filter(cliente => {
-          if (!this.buscar) return this.clientes;
-          return (
-            cliente.nome.toLowerCase().includes(this.buscar.toLowerCase()) ||
-            cliente.cpf.toLowerCase().includes(this.buscar.toLowerCase()) ||
-            cliente.datadeNascimento
-              .toLowerCase()
-              .includes(this.buscar.toLowerCase()) ||
-            cliente.usuario.toLowerCase().includes(this.buscar.toLowerCase())
-          );
-        })
-      );
-    }
-  }
-};
+    methods: {
+      buscarClientes() {
+        HTTPRequestUtil.getClientes()
+          .then(clientes => {
+            this.clientes = clientes
+          })
+      }
+    },
+  };
 </script>
 
 <style>

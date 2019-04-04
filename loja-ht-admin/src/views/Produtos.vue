@@ -51,7 +51,8 @@
             <!-- Lista de departamentos -->
             <v-layout align-center justify-center fill-height>
                 <v-flex xs12 sm5 d-flex class="mt-4">
-                    <v-select :items="departamentos" item-text="nome" label="Departamentos" outline return-object v-model="produtoCorrente.departamento" item-value="produtoCorrente.departamento">
+                    <v-select :items="departamentos" item-text="nome" label="Departamentos" outline return-object
+                        v-model="produtoCorrente.departamento" item-value="produtoCorrente.departamento">
                     </v-select>
                 </v-flex>
             </v-layout>
@@ -78,12 +79,18 @@
                         <td class="text-xs-left">{{props.item.valor}}</td>
                         <td class="text-xs-left">{{props.item.qtdeDisponivel}}</td>
                         <td class="text-xs-center">
-                            <v-btn @click="editar(props.item)">
-                                Editar
-                            </v-btn>
-                            <v-btn @click="inativar(props.item)">
-                                Inativar
-                            </v-btn>
+                            <v-layout>
+                                <v-flex xs6>
+                                    <v-btn icon ripple @click="editar(props.item)">
+                                        <v-icon>edit</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                                <v-flex xs6>
+                                    <v-btn icon ripple @click="inativar(props.item)">
+                                        <v-icon>not_interested</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
                         </td>
                     </template>
                 </v-data-table>
@@ -168,7 +175,6 @@
 
         methods: {
             salvar() {
-                alert("Chamou o método Salvar" + JSON.stringify(this.produtoCorrente))
                 if (this.produtoCorrente._id != undefined) {
 
                     //Edição
@@ -213,7 +219,6 @@
 
             inativar(item) {
                 alert("Método Inativar clicado!" + JSON.stringify(item))
-
             },
 
             buscarProdutos() {
