@@ -23,6 +23,9 @@ class Produto extends Moongose.Schema {
                 type: String,
                 required: true
             },
+            imagem: {
+                type: String
+            },
             departamento:{
                 type: Moongose.Schema.Types.ObjectId,
                 ref: 'Departamento',

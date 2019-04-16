@@ -47,6 +47,15 @@
                 </v-flex>
             </v-layout>
 
+            <v-layout align-center justify-center fill-height>
+                <v-flex xs12 sm5 d-flex class="mt-4">
+                    <v-text-field label="URL da imagem do Produto" v-model="produtoCorrente.imagem">
+                    
+                    </v-text-field>
+                </v-flex>
+            </v-layout>
+
+
 
             <!-- Lista de departamentos -->
             <v-layout align-center justify-center fill-height>
@@ -78,6 +87,7 @@
                         <td class="text-xs-left">{{props.item.descricao}}</td>
                         <td class="text-xs-left">{{props.item.valor}}</td>
                         <td class="text-xs-left">{{props.item.qtdeDisponivel}}</td>
+                        <td class="text-xs-left">{{props.item.imagem}}</td>
                         <td class="text-xs-center">
                             <v-layout>
                                 <v-flex xs6>
@@ -153,6 +163,12 @@
                     align: 'left',
                     sortable: false,
                     value: 'qtdeDisponivel'
+                },
+                {
+                    text: 'URL da Imagem',
+                    align: 'left',
+                    sortable: false,
+                    value: 'imagem'
                 },
                 {
                     text: 'Ações',
