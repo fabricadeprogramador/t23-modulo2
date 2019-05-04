@@ -194,6 +194,7 @@ export default {
   },
   mounted() {
     this.buscarCompras();
+    this.buscarClientes();
   },
   methods: {
     escolherComponente(valor) {
@@ -222,6 +223,9 @@ export default {
       HTTPRequestUtil.getProdutos().then(produtos => {
         this.produtos = produtos;
       });
+    },
+    buscarPorCliente(){
+      HTTPRequestUtil.getCompras
     }
   }
 };

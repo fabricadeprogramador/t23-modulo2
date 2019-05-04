@@ -71,5 +71,8 @@ export default {
     ///////////////////////////////////////////
     async getCompras() {
         return axios.get(API_URL + "compras").then(response => response.data);
+    },
+    async getComprasPorCliente(id) {
+        return axios.get(API_URL + "compras/cliente/" + id).then(response => response.data)
     }
 };
