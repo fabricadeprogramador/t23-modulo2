@@ -225,7 +225,9 @@ export default {
       });
     },
     buscarPorCliente(){
-      HTTPRequestUtil.getCompras
+      HTTPRequestUtil.getComprasPorCliente(this.clienteSelecionado._id).then(compras =>{
+        
+      })
     }
   }
 };
