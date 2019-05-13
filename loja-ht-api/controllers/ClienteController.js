@@ -2,12 +2,29 @@
 
 const Mongoose = require('mongoose')
 const Cliente = Mongoose.model('Cliente')
+const Usuario = Mongoose.model('Usuario')
 
 class ClienteController{
 
     static async buscarTodos(req, res){
         try{
             res.json(await Cliente.find({})
+            .populate('usuario', 'username')
+            .exec())
+        
+        }
+        
+        catch(error){
+            res.status(500).send("Erro ao buscar Clientes!")
+        
+        }
+
+    }
+
+    static async buscarPorUsuario(req, res){
+        try{
+            console.log(JSON.stringify(req.body))
+            res.json(await Cliente.find({"usuario":req.body})
             .populate('usuario', 'username senha')
             .exec())
         
@@ -23,7 +40,15 @@ class ClienteController{
     static async adicionar(req, res){
         
         try{
-            let adicionarCliente = await Cliente.create(req.body)
+            let clienteNovo = req.body
+            let usuarioNovo = req.body.usuario
+
+            if(usuarioNovo != undefined && usuarioNovo != null && usuarioNovo != {}){
+                usuarioNovo =  await Usuario.create(usuarioNovo)
+                clienteNovo.usuario = usuarioNovo
+            }
+
+            let adicionarCliente = await Cliente.create(clienteNovo)
             res.status(200).send(adicionarCliente)
         
         }
@@ -48,10 +73,16 @@ class ClienteController{
 
     static async editar(req, res){
         try{
-            let resultado = (await Cliente.findByIdAndUpdate(req.body._id, req.body))
+
+            if(req.body.usuario._id != undefined && req.body.usuario._id != "" && req.body.usuario._id != null){
+                let resultadoUsu = await Usuario.findOneAndUpdate({"_id": req.body.usuario._id}, req.body.usuario)
+            }
+
+            let resultado = (await Cliente.findOneAndUpdate({"_id" : req.body}, req.body))
             res.status(200).send(resultado)
         } catch(error){
-            res.status(500).send("Erro ao editar convidado")
+            console.log("ERRO AO EDITAR CLIENTE: " + error)
+            res.status(500).send("Erro ao editar cliente")
         }
     }
 

@@ -11,14 +11,19 @@ class ComprasController {
       res.status(500).send("Erro ao buscar Lista de produtos");
     }
   }
+
   static async adicionar(req, res) {
     try {
+
+      console.log("COMPRA PARA SALVAR: " + JSON.stringify(req.body))
       let resultado = await Compras.create(req.body);
       res.status(200).json(resultado);
     } catch (error) {
+      console.log(error)
       res.status(500).send("Erro ao adicionar Produto");
     }
   }
+  
   static async deletar(req, res) {
     try {
       let deletarid = req.body._id;
@@ -32,10 +37,10 @@ class ComprasController {
 
   static async buscarPorProduto(req, res) {
     try {
-      let idProduto1 = req.params.idProduto;
+      let idProduto = req.params.idProduto;
 
       res.json(
-        await Compras.find({ produto: idProduto1 })
+        await Compras.find({ produtos: idProduto })
           .populate("produto", "id")
           .exec()
       );

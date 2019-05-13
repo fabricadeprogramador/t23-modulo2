@@ -1,9 +1,7 @@
 'use scrict'
 
-
 const Mongoose = require('mongoose')
 const Departamento = Mongoose.model('Departamento')
-
 class DepartamentoController {
 
     static async buscarTodos(req, res) {
@@ -47,7 +45,7 @@ class DepartamentoController {
     static async editar(req, res) {
         try {
             let resultado = await Departamento.findByIdAndUpdate(req.body._id, req.body)
-            if(resultado != null){
+            if (resultado != null) {
                 res.status(200).send(resultado)
             } else {
                 res.status(500).send("Erro na edição: Objeto sem id")
@@ -74,6 +72,22 @@ class DepartamentoController {
 
         }
     }
+
+    static async buscarAtivos(req, res) {
+        console.log("ENTROU BUSCAR ATIVOS")
+        
+        try {
+            console.log("ENTROU TRY")
+            res.json(await Departamento.find({"ativo" : true}))
+
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Erro ao buscar departamentos ativos')
+
+        }
+    }
+
+
 
 }
 
