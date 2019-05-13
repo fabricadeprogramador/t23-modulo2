@@ -1,7 +1,10 @@
 <template>
     <div class="departamento">
+        <v-layout align-center justify-center column fill-height v-if="!mostrarForm" class="my-2">
+            <v-btn @click="mostrarForm = true" color="info">Novo Departamento</v-btn>
+        </v-layout>
         <v-container fluid>
-            <v-layout align-center justify-center fill-height>
+            <v-layout align-center justify-center fill-height v-if="mostrarForm">
                 <v-flex xs12>
                     <v-form ref="form" v-model="valid" lazy-validation>
                         <v-text-field v-model="departamentoCorrente.nome" :counter="20" :rules="regrasNome" label="Nome"
@@ -13,15 +16,18 @@
                         <v-btn :disabled="valid == false" color="info" @click="salvar()">
                             Salvar
                         </v-btn>
-                         <v-btn color="error" @click="limparDados()">
+                        <v-btn color="error" @click="limparDados()">
                             Limpar
+                        </v-btn>
+                        <v-btn color="warning" @click="mostrarForm = false">
+                            Fechar
                         </v-btn>
                     </v-form>
                 </v-flex>
             </v-layout>
 
             <v-layout row>
-                <v-flex xs12 class="my-4">
+                <v-flex xs12 class="my-2">
                     <v-card>
                         <v-list>
                             <v-subheader>
@@ -43,8 +49,15 @@
                                                 </v-btn>
                                             </v-flex>
                                             <v-flex xs12 class="my-4">
-                                                <v-btn icon ripple @click="inativar(departamento)">
+                                                <v-btn icon flat color="red" v-if="!departamento.ativo"
+                                                    @click="inativar(departamento)">
                                                     <v-icon>not_interested</v-icon>
+                                                </v-btn>
+                                            </v-flex>
+                                            <v-flex xs12 class="my-4">
+                                                <v-btn icon flat color="green" v-if="departamento.ativo"
+                                                    @click="inativar(departamento)">
+                                                    <v-icon>check</v-icon>
                                                 </v-btn>
                                             </v-flex>
                                         </v-layout>
@@ -65,6 +78,7 @@
     export default {
         data: () => ({
             valid: false,
+            mostrarForm: false,
             regrasNome: [
                 v => !!v || 'Campo nome é obrigatório!',
                 v => (v && v.length <= 20) || 'O nome do departamento deve ter no máximo 20 caracteres!',
@@ -94,7 +108,8 @@
                 if (this.departamentoCorrente._id != undefined) {
                     //Edição
                     HTTPRequestUtil.editarDepartamento(this.departamentoCorrente).then(departamento => {
-                         if (departamento == "Erro na edição: Objeto sem id" || departamento == "Impossivel editar o departamento") {
+                        if (departamento == "Erro na edição: Objeto sem id" || departamento ==
+                            "Impossivel editar o departamento") {
                             alert("Erro ao editar departamento!")
                         } else {
                             this.limparDados()

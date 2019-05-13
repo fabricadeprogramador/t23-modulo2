@@ -8,6 +8,10 @@ export default {
         return axios.get(API_URL + "departamentos").then(response => response.data);
     },
 
+    async getDepartamentosAtivos() {
+        return axios.get(API_URL + "departamentosativos").then(response => response.data);
+    },
+
     async adicionarDepartamento(departamento) {
         return axios
             .post(API_URL + "departamentos", departamento)
@@ -55,6 +59,10 @@ export default {
             .then(response => response.data);
     },
 
+    // LOGIN
+    async autenticar(usuario) {
+        return axios.post(API_URL + "autenticar", usuario).then(response => response.data);
+    },
     ///CLIENTES
 
 
@@ -72,7 +80,12 @@ export default {
     async getCompras() {
         return axios.get(API_URL + "compras").then(response => response.data);
     },
+
     async getComprasPorCliente(id) {
         return axios.get(API_URL + "compras/cliente/" + id).then(response => response.data)
+    },
+
+    async getComprasPorProduto(id) {
+        return axios.get(API_URL + "compras/produto/" + id).then(response => response.data)
     }
 };

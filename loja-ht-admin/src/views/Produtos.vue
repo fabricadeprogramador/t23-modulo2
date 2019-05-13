@@ -3,91 +3,103 @@
         <v-container grid-list-md text-xs-center fluid>
             <!-- inicio dos campos -->
 
+            <v-layout align-center justify-center column fill-height v-if="!mostrarForm" class="mb-4">
+                <v-btn @click="mostrarForm = true" color="info">Novo Produto</v-btn>
+            </v-layout>
+
             <!-- inicio da primeira linha com os campos descrição e valor -->
-            <v-layout row wrap align-space-between justify-center>
-                <v-flex xs5 sm5>
-                    <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-text-field label="Descrição" v-model="produtoCorrente.descricao" :counter="20"
-                            :rules="regrasDescricao" required="">
+            <v-container grid-list-md text-xs-center fluid v-if="mostrarForm">
+                <v-layout row wrap align-space-between justify-center>
+                    <v-flex xs5 sm5>
+                        <v-form ref="form" v-model="valid" lazy-validation>
+                            <v-text-field label="Descrição" v-model="produtoCorrente.descricao" :counter="20"
+                                :rules="regrasDescricao" required="">
+
+                            </v-text-field>
+                        </v-form>
+                    </v-flex>
+
+                    <v-flex xs5 sm5>
+                        <v-form ref="form" v-model="valid" lazy-validation>
+                            <v-text-field type="number" label="Valor" v-model="produtoCorrente.valor" :counter="20"
+                                required="">
+
+                            </v-text-field>
+                        </v-form>
+                    </v-flex>
+
+                </v-layout>
+
+
+                <!-- segunda linha com os campos Quantidade e Marca -->
+                <v-layout align-center justify-center fill-height>
+                    <v-flex xs5>
+                        <v-form ref="form" v-model="valid" lazy-validation>
+                            <v-text-field type="number" label="Quantidade" v-model="produtoCorrente.qtdeDisponivel"
+                                :counter="20" required="">
+
+                            </v-text-field>
+                        </v-form>
+                    </v-flex>
+
+                    <v-flex xs5>
+                        <v-form ref="form" v-model="valid" lazy-validation>
+                            <v-text-field label="Marca" v-model="produtoCorrente.marca" :counter="20"
+                                :rules="regrasMarca" required="">
+
+                            </v-text-field>
+                        </v-form>
+                    </v-flex>
+                </v-layout>
+
+                <v-layout align-center justify-center fill-height>
+                    <v-flex xs12 sm5 d-flex class="mt-4">
+                        <v-text-field label="URL da imagem do Produto" v-model="produtoCorrente.imagem">
 
                         </v-text-field>
-                    </v-form>
-                </v-flex>
-
-                <v-flex xs5 sm5>
-                    <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-text-field type="number" label="Valor" v-model="produtoCorrente.valor" :counter="20"
-                            required="">
-
-                        </v-text-field>
-                    </v-form>
-                </v-flex>
-
-            </v-layout>
-
-
-            <!-- segunda linha com os campos Quantidade e Marca -->
-            <v-layout align-center justify-center fill-height>
-                <v-flex xs5>
-                    <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-text-field type="number" label="Quantidade" v-model="produtoCorrente.qtdeDisponivel"
-                            :counter="20" required="">
-
-                        </v-text-field>
-                    </v-form>
-                </v-flex>
-
-                <v-flex xs5>
-                    <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-text-field label="Marca" v-model="produtoCorrente.marca" :counter="20" :rules="regrasMarca"
-                            required="">
-
-                        </v-text-field>
-                    </v-form>
-                </v-flex>
-            </v-layout>
-
-            <v-layout align-center justify-center fill-height>
-                <v-flex xs12 sm5 d-flex class="mt-4">
-                    <v-text-field label="URL da imagem do Produto" v-model="produtoCorrente.imagem">
-                    
-                    </v-text-field>
-                </v-flex>
-            </v-layout>
+                    </v-flex>
+                </v-layout>
 
 
 
-            <!-- Lista de departamentos -->
-            <v-layout align-center justify-center fill-height>
-                <v-flex xs12 sm5 d-flex class="mt-4">
-                    <v-select :items="departamentos" item-text="nome" label="Departamentos" outline return-object
-                        v-model="produtoCorrente.departamento" item-value="produtoCorrente.departamento">
-                    </v-select>
-                </v-flex>
-            </v-layout>
-            <!-- /Lista de departamentos -->
+                <!-- Lista de departamentos -->
+                <v-layout align-center justify-center fill-height>
+                    <v-flex xs12 sm5 d-flex class="mt-4">
+                        <v-select :items="departamentos" item-text="nome" label="Departamentos" outline return-object
+                            v-model="produtoCorrente.departamento" item-value="produtoCorrente.departamento">
+                        </v-select>
+                    </v-flex>
+                </v-layout>
+                <!-- /Lista de departamentos -->
 
 
-            <!-- botões -->
-            <v-btn :disabled="valid == false" color="info" @click="salvar()">
-                Salvar
-            </v-btn>
+                <!-- botões -->
+                <v-btn :disabled="valid == false" color="info" @click="salvar()">
+                    Salvar
+                </v-btn>
 
-            <v-btn color="error" @click="limparDados()">
-                Limpar
-            </v-btn>
-            <!-- /botões -->
+                <v-btn color="error" @click="limparDados()">
+                    Limpar
+                </v-btn>
+
+                <v-btn color="warning" @click="mostrarForm = false">
+                    Fechar
+                </v-btn>
+                <!-- /botões -->
+            </v-container>
 
             <!-- tela de apresentação de todos os produtos cadastrados -->
             <template>
 
                 <v-data-table :headers="cabecalho" :items="listaDosProdutos" class="elevation-1">
                     <template v-slot:items="props">
+                        <td class="text-xs-left">
+                            <v-img :src="props.item.imagem"></v-img>
+                        </td>
                         <td>{{ props.item.marca }}</td>
                         <td class="text-xs-left">{{props.item.descricao}}</td>
-                        <td class="text-xs-left">{{props.item.valor}}</td>
+                        <td class="text-xs-left">R$ {{props.item.valor}}</td>
                         <td class="text-xs-left">{{props.item.qtdeDisponivel}}</td>
-                        <td class="text-xs-left">{{props.item.imagem}}</td>
                         <td class="text-xs-center">
                             <v-layout>
                                 <v-flex xs6>
@@ -120,6 +132,7 @@
 
         data: () => ({
             valid: false,
+            mostrarForm: false,
             regrasDescricao: [
                 v => !!v || 'Campo descrição é obrigatório!',
                 v => (v && v.length <= 40) || 'A descrição do produto deve ter no máximo 40 caracteres!',
@@ -141,31 +154,31 @@
             title: 'Lista de Produtos',
 
             cabecalho: [{
-                    text: 'Marca',
+                    text: 'Imagem',
                     align: 'left',
                     sortable: false,
                     value: 'marca'
                 },
                 {
-                    text: 'Descrição',
+                    text: 'Marca',
                     align: 'left',
                     sortable: false,
                     value: 'descricao'
                 },
                 {
-                    text: 'Valor',
+                    text: 'Descrição',
                     align: 'left',
                     sortable: false,
                     value: 'valor'
                 },
                 {
-                    text: 'Qtde Disponível',
+                    text: 'Valor',
                     align: 'left',
                     sortable: false,
                     value: 'qtdeDisponivel'
                 },
                 {
-                    text: 'URL da Imagem',
+                    text: 'Qtde Disponível',
                     align: 'left',
                     sortable: false,
                     value: 'imagem'
@@ -185,9 +198,8 @@
         mounted: function () {
             //chamar o método de buscar produtos
             this.buscarProdutos()
-            this.buscarDepartamentos()
+            this.buscarDepartamentosAtivos()
         },
-
 
         methods: {
             salvar() {
@@ -249,8 +261,8 @@
                 this.produtoCorrente = {}
             },
 
-            buscarDepartamentos() {
-                HTTPRequestUtil.getDepartamentos()
+            buscarDepartamentosAtivos() {
+                HTTPRequestUtil.getDepartamentosAtivos()
                     .then(departamentos => {
                         this.departamentos = departamentos
                     })

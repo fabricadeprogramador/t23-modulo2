@@ -6,6 +6,7 @@ import Clientes from "./views/Clientes.vue";
 import Departamentos from "./views/Departamentos.vue";
 import Produtos from "./views/Produtos.vue";
 import Compras from "./views/Compras.vue";
+import Logout from "./views/Logout.vue";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
       path: "/compras",
       name: "Compras",
       component: Compras
-    }
+    },
+    {
+      path: "/logout",
+      name: "Logout",
+      component: Logout
+    },
   ]
 });
